@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import registerSchema from "../validation/registerSchema";
-import { register as registerUser } from "../services/authService";
+import { register as registerUser } from "../services/authservice";
 import { useState } from "react";
 
 const Register = () => {
