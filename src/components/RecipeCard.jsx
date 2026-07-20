@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const RecipeCard = ({ recipe = {}, onDelete , }) => {
+const RecipeCard = ({ recipe = {}, onDelete }) => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   return (
@@ -8,9 +8,8 @@ const RecipeCard = ({ recipe = {}, onDelete , }) => {
       {/* Image */}
       <img
         src={
-          recipe.imgUrl
-            ? `${API_URL}/images/${recipe.imgUrl}`
-            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL3-VV39NH7Ks1Xqz2JT5GdG_x2BR6MImc5gq_CTv9Ag&s=10"
+          recipe.imgUrl ||
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL3-VV39NH7Ks1Xqz2JT5GdG_x2BR6MImc5gq_CTv9Ag&s=10"
         }
         alt={recipe.recipeName || "Recipe"}
         className="h-56 w-full object-contain"

@@ -13,11 +13,11 @@ const RecipeDetails = () => {
 
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   const fetchRecipe = async () => {
     try {
       const { data } = await getRecipe(id);
-      
+
       setRecipe(data.data);
     } catch (error) {
       console.log(error);
@@ -25,7 +25,7 @@ const RecipeDetails = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchRecipe();
   }, [id]);
@@ -60,11 +60,10 @@ const RecipeDetails = () => {
           {/* Image */}
 
           <img
-             src={
-          recipe.imgUrl
-            ? `${API_URL}/images/${recipe.imgUrl}`
-            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL3-VV39NH7Ks1Xqz2JT5GdG_x2BR6MImc5gq_CTv9Ag&s=10"
-        }
+            src={
+              recipe.imgUrl ||
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL3-VV39NH7Ks1Xqz2JT5GdG_x2BR6MImc5gq_CTv9Ag&s=10"
+            }
             className="h-400px w-full object-cover"
           />
 
@@ -122,8 +121,6 @@ const RecipeDetails = () => {
             {/* Buttons */}
 
             <div className="flex gap-4">
-            
-
               <Link
                 to="/dashboard"
                 className="rounded-lg bg-green-600 px-6 py-3 text-white hover:bg-green-700"
