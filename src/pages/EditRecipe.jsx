@@ -40,8 +40,7 @@ const EditRecipe = () => {
         ingredients: data.data.ingredients.join(", "),
         instructions: data.data.instructions.join(", "),
       });
-
-      setPreview(`${import.meta.env.VITE_API_URL}/images/${data.data.imgUrl}`);
+      setPreview(res.data.data.imgUrl);
     } catch (error) {
       console.log(error);
       alert("Unable to load recipe");
