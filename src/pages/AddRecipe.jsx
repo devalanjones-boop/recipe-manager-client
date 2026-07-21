@@ -37,12 +37,6 @@ const AddRecipe = () => {
   };
 
   const onSubmit = async (form) => {
-    console.log(form);
-
-    // if (!image) {
-    //   alert("Please select an image");
-    //   return;
-    // }
 
     try {
       setLoading(true);

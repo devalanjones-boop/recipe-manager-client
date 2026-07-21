@@ -44,13 +44,16 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-        <h2 className="mb-6 text-center text-3xl font-bold text-gray-800">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-6 sm:px-6">
+      <div className="w-full max-w-md rounded-xl bg-white p-5 shadow-lg sm:p-8">
+        <h2 className="mb-5 text-center text-2xl font-bold text-gray-800 sm:mb-6 sm:text-3xl">
           Login
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4 sm:space-y-5"
+        >
           {/* Email */}
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -61,14 +64,16 @@ export default function Login() {
               type="email"
               placeholder="Enter your email"
               {...register("email")}
-              className={`w-full rounded-lg border px-4 py-2 outline-none transition focus:ring-2 ${
+              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none transition sm:px-4 sm:text-base ${
                 errors.email
-                  ? "border-red-500 focus:ring-red-300"
-                  : "border-gray-300 focus:ring-blue-400"
+                  ? "border-red-500 focus:ring-2 focus:ring-red-300"
+                  : "border-gray-300 focus:ring-2 focus:ring-blue-400"
               }`}
             />
 
-            <p className="mt-1 text-sm text-red-500">{errors.email?.message}</p>
+            <p className="mt-1 text-xs text-red-500 sm:text-sm">
+              {errors.email?.message}
+            </p>
           </div>
 
           {/* Password */}
@@ -81,14 +86,14 @@ export default function Login() {
               type="password"
               placeholder="Enter your password"
               {...register("password")}
-              className={`w-full rounded-lg border px-4 py-2 outline-none transition focus:ring-2 ${
+              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none transition sm:px-4 sm:text-base ${
                 errors.password
-                  ? "border-red-500 focus:ring-red-300"
-                  : "border-gray-300 focus:ring-blue-400"
+                  ? "border-red-500 focus:ring-2 focus:ring-red-300"
+                  : "border-gray-300 focus:ring-2 focus:ring-blue-400"
               }`}
             />
 
-            <p className="mt-1 text-sm text-red-500">
+            <p className="mt-1 text-xs text-red-500 sm:text-sm">
               {errors.password?.message}
             </p>
           </div>
@@ -97,13 +102,13 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-blue-600 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 sm:text-base"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
 
           {/* Register link */}
-          <p className="mt-4 text-center text-sm text-gray-600">
+          <p className="pt-2 text-center text-xs text-gray-600 sm:text-sm">
             Don't have an account?{" "}
             <Link
               to="/register"
