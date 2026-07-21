@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const RecipeCard = ({ recipe = {}, onDelete }) => {
+const RecipeCard = ({ recipe = {}, onDelete, deletingId }) => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   return (
@@ -52,9 +52,10 @@ const RecipeCard = ({ recipe = {}, onDelete }) => {
 
           <button
             onClick={() => onDelete?.(recipe._id)}
-            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            disabled={deletingId === recipe._id}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            Delete
+            {deletingId === recipe._id ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>

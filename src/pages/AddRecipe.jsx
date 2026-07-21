@@ -7,6 +7,7 @@ import API from "../api/axios";
 import Navbar from "../components/Navbar";
 import recipeSchema from "../validation/recipeSchema";
 import { createRecipes } from "../api/recipeApi";
+import { toast } from "react-toastify";
 
 const AddRecipe = () => {
   const navigate = useNavigate();
@@ -77,12 +78,20 @@ const AddRecipe = () => {
 
       await createRecipes(formData);
 
-      alert("Recipe added successfully");
-
+      toast.success("Recipe added successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       navigate("/dashboard");
     } catch (error) {
       console.log(error.response);
-      alert(error.response?.data?.message || "Failed to add recipe");
+      toast.error(error.response?.data?.message || "Failed to add recipe");
     } finally {
       setLoading(false);
     }
@@ -210,10 +219,36 @@ const AddRecipe = () => {
           )}
 
           <button
+            type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-green-600 py-3 font-semibold cursor-pointer text-white hover:bg-green-700 disabled:bg-gray-400"
+            className="w-full rounded-lg bg-green-600 py-3 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            {loading ? "Adding Recipe..." : "Add Recipe"}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg
+                  className="h-5 w-5 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+                  />
+                </svg>
+                Adding Recipe...
+              </span>
+            ) : (
+              "Add Recipe"
+            )}
           </button>
         </form>
       </div>

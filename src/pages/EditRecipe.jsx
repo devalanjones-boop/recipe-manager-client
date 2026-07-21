@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
 import recipeSchema from "../validation/recipeSchema";
 import { getRecipe, updateRecipe } from "../api/recipeApi";
+import { toast } from "react-toastify";
 
 const EditRecipe = () => {
   const { id } = useParams();
@@ -97,13 +98,13 @@ const EditRecipe = () => {
       }
 
       await updateRecipe(id, formData);
-      alert("Recipe updated successfully");
+      toast.success("Recipe updated successfully");
       navigate("/dashboard", { replace: true });
     } catch (error) {
       console.log(error);
       console.log(error.response?.data);
       console.log(error.response?.status);
-      alert(error.response?.data?.message || "Update failed");
+      toast.error(error.response?.data?.message || "Update failed");
     } finally {
       setSaving(false);
     }
@@ -214,10 +215,36 @@ const EditRecipe = () => {
           )}
 
           <button
+            type="submit"
             disabled={saving}
-            className="w-full rounded-lg bg-green-600 py-3 font-semibold text-white cursor-pointer hover:bg-green-700 disabled:bg-gray-400"
+            className="w-full rounded-lg bg-green-600 py-3 font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            {saving ? "Updating..." : "Update Recipe"}
+            {saving ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg
+                  className="h-5 w-5 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"
+                  />
+                </svg>
+                Updating...
+              </span>
+            ) : (
+              "Update Recipe"
+            )}
           </button>
         </form>
       </div>

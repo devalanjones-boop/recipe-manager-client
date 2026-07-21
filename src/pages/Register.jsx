@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import registerSchema from "../validation/registerSchema";
 import { register as registerUser } from "../services/authservice";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const onSubmit = async (data) => {
 
     await registerUser(payload);
 
-    alert("Registration successful");
+    toast.success("Registration successful");
     navigate("/");
   } catch (err) {
 
