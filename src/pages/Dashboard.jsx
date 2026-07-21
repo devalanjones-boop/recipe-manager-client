@@ -34,24 +34,57 @@ const Dashboard = () => {
     }
   }, []);
 
-const handleDelete = async (id) => {
-  try {
-    setDeletingId(id);
+const handleDelete = (id) => {
+  toast(
+    ({ closeToast }) => (
+      <div>
+        <p className="mb-3 font-medium">
+          Are you sure you want to delete this recipe?
+        </p>
 
-    await deleteRecipe(id);
+        <div className="flex gap-2">
+          <button
+            onClick={async () => {
+              closeToast();
 
-    setRecipes((prev) =>
-      prev.filter((recipe) => recipe._id !== id)
-    );
+              try {
+                setDeletingId(id);
 
-    toast.success("Recipe deleted successfully!");
-  } catch (error) {
-    toast.error(
-      error.response?.data?.message || "Failed to delete recipe"
-    );
-  } finally {
-    setDeletingId(null);
-  }
+                await deleteRecipe(id);
+
+                setRecipes((prev) =>
+                  prev.filter((recipe) => recipe._id !== id)
+                );
+
+                toast.success("Recipe deleted successfully!");
+              } catch (error) {
+                toast.error(
+                  error.response?.data?.message || "Failed to delete recipe"
+                );
+              } finally {
+                setDeletingId(null);
+              }
+            }}
+            className="rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600"
+          >
+            Delete
+          </button>
+
+          <button
+            onClick={closeToast}
+            className="rounded bg-gray-300 px-3 py-1 hover:bg-gray-400"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    ),
+    {
+      autoClose: false,
+      closeOnClick: false,
+      closeButton: false,
+    }
+  );
 };
 
   if (loading) return <Loader />;

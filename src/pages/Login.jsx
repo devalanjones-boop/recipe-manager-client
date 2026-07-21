@@ -5,10 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import loginSchema from "../validation/loginSchema";
 import { login } from "../services/authservice";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
-  let [loginError, setloginError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -20,16 +21,25 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
+
       const res = await login(data);
 
       const token = res?.token || res?.data?.token;
 
       if (token) {
         localStorage.setItem("token", token);
+
+        toast.success("Login successful!");
+
         navigate("/dashboard");
+      } else {
+        toast.error("Invalid login response");
       }
     } catch (error) {
-      setloginError(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,17 +96,12 @@ export default function Login() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700"
+            disabled={loading}
+            className="w-full rounded-lg bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
-          {loginError && (
-            <p className="mb-4 rounded bg-red-100 p-3 text-red-600">
-              {loginError}
-            </p>
-          )}
-          
           {/* Register link */}
           <p className="mt-4 text-center text-sm text-gray-600">
             Don't have an account?{" "}
